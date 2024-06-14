@@ -23,7 +23,7 @@ public class GeneroController {
         return "generos/insert";
     }
 
-    @RequestMapping(value = "insert", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public String insert(@RequestParam("nome") String nome) {
         Genero genero = new Genero();
         genero.setNome(nome);
@@ -55,9 +55,10 @@ public class GeneroController {
     public String update(@RequestParam("id") long id, @RequestParam("nome") String nome) {
         Optional<Genero> result = generoRepo.findById(id);
         if(result.isPresent()) {
-            result.get().setNome(nome);
+            Genero genero = result.get();
+            genero.setNome(nome);
 
-            generoRepo.save(result.get());
+            generoRepo.save(genero);
         }
         return "redirect:/generos/list";
     }
